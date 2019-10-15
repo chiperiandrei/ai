@@ -53,39 +53,28 @@ def validate(state, m, c):
     return True
 
 
-def view(name, state):
+def view(name, state, m, c):
     print(name, end=' ')
     if state[1] < 0:
-        print('L', end=': ')
+        print('L: {} {} {} {} ({} {})'.format(state[4], state[5], state[6], state[7], m, c))
     else:
-        print('R', end=': ')
-    print(state[4], state[5], state[6], state[7])
+        print('R: {} {} {} {} ({} {})'.format(state[4], state[5], state[6], state[7], m, c))
 
 
-def random_strategy(boat_capacity, m_no, c_no):
+def random_strategy(boat_capacity, m_no, c_no):  # naive
     state = initialize(boat_capacity, m_no, c_no)
-    view('', state)
+    view('> ', state, 0, 0)
     m = random.randint(0, m_no)
     c = random.randint(0, c_no)
     while not is_final(state):
         new_state = transition(state, m, c)
         if validate(new_state, m, c):
             state = new_state
-            view('', state)
+            view('> ', state, m, c)
         m = random.randint(0, m_no)
         c = random.randint(0, c_no)
 
 
 if __name__ == '__main__':
-    print("    M C M C")
+    print("      M C M C")
     random_strategy(boat_capacity=2, m_no=4, c_no=3)
-
-    # state = initialize(boat_capacity=6, m_no=4, c_no=3)
-    # state = [6, -1, 4, 3, 0, 0, 4, 3]
-
-    # if validate(STATE, 1, 1):
-    #     transition(STATE, 1, 1)  # RIGHT ---> LEFT
-    # view('S2 =', STATE)
-    # if validate(STATE, 1, 1):
-    #     transition(STATE, 1, 1)  # LEFT ---> RIGHT
-    # view('S3 =', STATE)
