@@ -161,6 +161,7 @@ def combinations(graph, state):
 def initialize_graph(state):
     graph = Graph(state)
     cnt = 0
+    # ACEST len(graph) se actualizeaza la fiecare iteratie #BeCarefull
     while cnt < len(graph):
         combinations(graph, graph.get_vertex_state(cnt))
         cnt += 1
@@ -168,7 +169,6 @@ def initialize_graph(state):
 
 
 if __name__ == '__main__':
-    INITIAL_STATE = initialize(boat_capacity=6, m_no=4, c_no=3)
-    GRAPH = initialize_graph(INITIAL_STATE)
+    GRAPH = initialize_graph(initialize(boat_capacity=6, m_no=4, c_no=3))
     # print(GRAPH)
     GRAPH.iddfs(4)
