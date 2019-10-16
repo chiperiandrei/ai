@@ -4,7 +4,7 @@ import sys
 sys.setrecursionlimit(9000)
 R = +1  # right side
 L = -1  # left side
-allPossibleStates = []
+
 
 # state = [boat_capacity, boat_side, m_no, c_no, m_no R, c_no R,  m_no L, c_no L]
 
@@ -43,7 +43,7 @@ def validate(state, m, c):
         return False
     if state[4] < state[5]:
         return False
-    if state[6] < state[7]:
+    if state[-1] < state[-2]:
         return False
     if m + c > state[0]:
         return False
@@ -70,39 +70,39 @@ def view_all_states(list_of_states):
     for index, state in enumerate(list_of_states):
         view(index, state)
 
-def generateAllStates(current_state):
-		nrM, nrC = 0, 0
-		for i in range(0, boat_capacity+1):
-			for j in range(0, boat_capacity+1):
-				if validate(current_state,i,j):
-					new_state = transition(current_state,i,j)
-					allPossibleStates.append(new_state)
-		return allPossibleStates
-			   
-def bktr_strategy(state,path):
-	possible =[]
-	possible = generateAllStates(state)
-	if state in path:
-	    bktr_strategy(path[len(path)-1], path)
-	if is_final(state):
-			path.append(state)
-			return state
-	else:
-		for st in possible:
-				path.append(st)
-				bktr_strategy(st,path)	
-	return path
+
+# def generateAllStates(current_state):
+#     nrM, nrC = 0, 0
+#     for i in range(0, boat_capacity + 1):
+#         for j in range(0, boat_capacity + 1):
+#             if validate(current_state, i, j):
+#                 new_state = transition(current_state, i, j)
+#                 allPossibleStates.append(new_state)
+#     return allPossibleStates
+
+
+def bktr_strategy(state, path):
+    if is_final(state):
+        return path
+    else:
+        for i in range(state[0] + 1):
+            for j in range(state[0] + 1):
+                if validate(state, i, j):
+                    new_state = transition(state, i, j)
+                    if new_state not in path:
+                        view(1, state)
+                        path.append(new_state)
+                        bktr_strategy(new_state, path)
+                    path.pop()
 
 
 if __name__ == '__main__':
-		print("   M C M C")
-		boat_capacity = 3
-		m_no = 4
-		c_no = 4
-		path = []
-		result = []
-		state = initialize(boat_capacity, m_no, c_no)
-		#path.append(state)
-		result = bktr_strategy(state,path)
-		view_all_states(result)
-		
+    print("   M C M C")
+    boat_capacity = 2
+    m_no = 3
+    c_no = 3
+    result = []
+    state = initialize(boat_capacity, m_no, c_no)
+    path = state
+    bktr_strategy(state, path)
+    view_all_states(path)
