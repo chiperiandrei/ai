@@ -169,6 +169,10 @@ def initialize_graph(state):
 
 
 if __name__ == '__main__':
-    GRAPH = initialize_graph(initialize(boat_capacity=6, m_no=4, c_no=3))
+    # GRAPH = initialize_graph(initialize(boat_capacity=6, m_no=4, c_no=3))
+    GRAPH = initialize_graph(initialize(boat_capacity=3, m_no=4, c_no=3))
+
     # print(GRAPH)
-    GRAPH.iddfs(4)
+
+    # GRAPH.iddfs(4)
+    GRAPH.iddfs(6)
