@@ -70,27 +70,17 @@ def view_all_states(list_of_states):
     for index, state in enumerate(list_of_states):
         view(index, state)
 
-
-# def generateAllStates(current_state):
-#     nrM, nrC = 0, 0
-#     for i in range(0, boat_capacity + 1):
-#         for j in range(0, boat_capacity + 1):
-#             if validate(current_state, i, j):
-#                 new_state = transition(current_state, i, j)
-#                 allPossibleStates.append(new_state)
-#     return allPossibleStates
-
-
 def bktr_strategy(state, path):
     if is_final(state):
-        return path
+        print("Rezolvat")
+        view_all_states(path)
+        exit()
     else:
         for i in range(state[0] + 1):
             for j in range(state[0] + 1):
                 if validate(state, i, j):
                     new_state = transition(state, i, j)
                     if new_state not in path:
-                        view(1, state)
                         path.append(new_state)
                         bktr_strategy(new_state, path)
                     path.pop()
@@ -98,11 +88,10 @@ def bktr_strategy(state, path):
 
 if __name__ == '__main__':
     print("   M C M C")
-    boat_capacity = 2
-    m_no = 3
-    c_no = 3
+    boat_capacity = 4
+    m_no = 6
+    c_no = 6
     result = []
     state = initialize(boat_capacity, m_no, c_no)
-    path = state
+    path = [state]
     bktr_strategy(state, path)
-    view_all_states(path)
