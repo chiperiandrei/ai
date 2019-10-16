@@ -1,8 +1,10 @@
 import random
 import sys
+
 sys.setrecursionlimit(9000)
 R = +1  # right side
 L = -1  # left side
+
 
 # state = [boat_capacity, boat_side, m_no, c_no, m_no R, c_no R,  m_no L, c_no L]
 
@@ -63,34 +65,29 @@ def view(index, state):
         part = 'R'
     print('{}: {} {} {} {} ({})'.format(part, state[4], state[5], state[6], state[7], index))
 
-def view1(state):
-    if state[1] < 0:
-        part = 'L'
-    else:
-        part = 'R'
-    print('{}: {} {} {} {}'.format(part, state[4], state[5], state[6], state[7]))
-
-
-
 def view_all_states(list_of_states):
     for index, state in enumerate(list_of_states):
         view(index, state)
 
-def bktr_strategy(state,boat_capacity, m_no, c_no,k,p):
-	while not is_final(state):
-		for m in range(k,m_no+1):
-			for c in range(p,c_no+1):
-				if validate(state,m,c):
-					state = transition(state,m,c)
-					view1(state)
-					print("Am ajuns aici")
-					bktr_strategy(state,boat_capacity,m_no,c_no,m,0)
-		
+
+def bktr_strategy(state, boat_capacity, m_no, c_no, k, p, path):
+        path.append(state)
+        for m in range(k, m_no + 1):
+            for c in range(p, c_no + 1):
+                if validate(state, m, c):
+                    state = transition(state, m, c)
+                    path.append(state)
+                    if is_final(state):
+                        path.append(state)
+                        break
+                    bktr_strategy(state, boat_capacity, m_no, c_no, m, c+1, path)
+        return path
 
 if __name__ == '__main__':
-	print("   M C M C")
-	boat_capacity = 4
-	m_no = 4
-	c_no = 4
-	state = initialize(boat_capacity, m_no, c_no)
-	bktr_strategy(state,boat_capacity=3, m_no=4, c_no=4, k=0, p=0)
+    print("   M C M C")
+    boat_capacity = 4
+    m_no = 4
+    c_no = 4
+    path = []
+    state = initialize(boat_capacity, m_no, c_no)
+    bktr_strategy(state, boat_capacity=3, m_no=4, c_no=4, k=0, p=0, path = path)
