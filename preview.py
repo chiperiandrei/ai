@@ -70,6 +70,7 @@ def view_all_states(list_of_states):
     for index, state in enumerate(list_of_states):
         view(index, state)
 
+
 def bktr_strategy(state, path):
     if is_final(state):
         print("Rezolvat")
@@ -79,6 +80,7 @@ def bktr_strategy(state, path):
         for i in range(state[0] + 1):
             for j in range(state[0] + 1):
                 if validate(state, i, j):
+                    view(0, state)
                     new_state = transition(state, i, j)
                     if new_state not in path:
                         path.append(new_state)
@@ -90,7 +92,7 @@ if __name__ == '__main__':
     print("   M C M C")
     boat_capacity = 4
     m_no = 6
-    c_no = 6
+    c_no = 3
     result = []
     state = initialize(boat_capacity, m_no, c_no)
     path = [state]
