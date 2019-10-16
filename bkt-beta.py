@@ -65,23 +65,28 @@ def view(index, state):
         part = 'R'
     print('{}: {} {} {} {} ({})'.format(part, state[4], state[5], state[6], state[7], index))
 
+
 def view_all_states(list_of_states):
     for index, state in enumerate(list_of_states):
         view(index, state)
 
 
 def bktr_strategy(state, boat_capacity, m_no, c_no, k, p, path):
-        path.append(state)
-        for m in range(k, m_no + 1):
-            for c in range(p, c_no + 1):
-                if validate(state, m, c):
-                    state = transition(state, m, c)
+    for m in range(k, m_no + 1):
+        for c in range(p, c_no + 1):
+            if validate(state, m, c):
+                state = transition(state, m, c)
+                path.append(state)
+                if is_final(state):
                     path.append(state)
-                    if is_final(state):
-                        path.append(state)
-                        break
-                    bktr_strategy(state, boat_capacity, m_no, c_no, m, c+1, path)
-        return path
+                    break
+                bktr_strategy(path[path.__len__() - 1], boat_capacity, m_no, c_no, m, c + 1, path)
+            # else:
+            #     bktr_strategy(state, boat_capacity, m_no, c_no, m, c, path)
+    for c in path:
+        print(view(1, c))
+    path.clear()
+
 
 if __name__ == '__main__':
     print("   M C M C")
@@ -89,5 +94,7 @@ if __name__ == '__main__':
     m_no = 4
     c_no = 4
     path = []
+    result = []
     state = initialize(boat_capacity, m_no, c_no)
-    bktr_strategy(state, boat_capacity=3, m_no=4, c_no=4, k=0, p=0, path = path)
+    path.append(state)
+    bktr_strategy(state, boat_capacity=3, m_no=4, c_no=4, k=0, p=0, path=path)
