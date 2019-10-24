@@ -230,7 +230,7 @@ class Graph:
 
             queue.sort(
                 reverse=True,
-                key=lambda state, : distances[str(state)] + (state[3] + state[4] / 1)  # / 2
+                key=lambda state, : distances[str(state)] + (state[4] + state[5] / 1)  # / 2
             )
 
 
@@ -291,7 +291,7 @@ if __name__ == '__main__':
         file = open(file_name, 'w+')
 
         random_m_no = random.randint(3, 15)
-        random_c_no = random.randint(3, random_c_no)
+        random_c_no = random.randint(3, random_m_no)
         random_boat_capacity = random.randint(3, 5)
 
         sys.stdout = old_stdout
