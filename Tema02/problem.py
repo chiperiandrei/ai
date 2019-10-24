@@ -230,7 +230,7 @@ class Graph:
 
             queue.sort(
                 reverse=True,
-                key=lambda state, : distances[str(state)] + (state[3] + state[4] / 1) # / 2
+                key=lambda state, : distances[str(state)] + (state[3] + state[4] / 1)  # / 2
             )
 
 
@@ -281,6 +281,10 @@ if __name__ == '__main__':
     old_stdout = sys.stdout
 
     random_boat_capacity, random_m_no, random_c_no = 5, 7, 6
+    a_star_times = []
+    iddfs_times = []
+    bkt_times = []
+    random_times = []
 
     for index in range(10):
         file_name = 'instance%s.txt' % str(index)
@@ -311,6 +315,7 @@ if __name__ == '__main__':
             print("moves =", iddfs_moves_no)
             print(end_time - start_time1, 's')
             print(end_time - start_time2, 's')
+            iddfs_times.append(end_time - start_time2)
         else:
             print("\nI can not find a path, check your instance data!")
             condition = False
@@ -322,6 +327,7 @@ if __name__ == '__main__':
         if condition:
             print("moves =", a_star_moves_no)
             print(end_time - start_time, 's')
+            a_star_times.append(end_time - start_time)
         else:
             print("\nI can not find a path, check your instance data!")
             condition = False
@@ -336,6 +342,7 @@ if __name__ == '__main__':
             end_time = time.time()
             print("moves =", len(path))
             print(end_time - start_time, 's')
+            bkt_times.append(end_time - start_time)
         else:
             print("\nI can not find a path, check your instance data!")
 
@@ -347,6 +354,7 @@ if __name__ == '__main__':
                 end_time = time.time()
                 print("moves =", random_moves_no)
                 print(end_time - start_time, 's')
+                random_times.append(end_time - start_time)
             else:
                 print('\nI can not perform my strategy if there are big values for missionaries and cannibals')
         else:
@@ -354,3 +362,24 @@ if __name__ == '__main__':
 
         file.write(file_buffer.getvalue())
         file_buffer.close()
+
+    sys.stdout = old_stdout
+
+    iddfs_time, a_star_time, bkt_time, random_time = 0, 0, 0, 0
+
+    if len(iddfs_times):
+        iddfs_time = sum(iddfs_times) / len(iddfs_times)
+    if len(a_star_times):
+        a_star_time = sum(a_star_times) / len(a_star_times)
+    if len(bkt_times):
+        bkt_time = sum(bkt_times) / len(bkt_times)
+    if len(random_times):
+        random_time = sum(random_times) / len(random_times)
+
+    print('\nAvg. time for:')
+    print('Iddfs: {}s ({})\nA*: {}s ({})\nBkt: {}s ({})\nRandom: {}s ({})\n'.format(
+        iddfs_time, len(iddfs_times),
+        a_star_time, len(a_star_times),
+        bkt_time, len(bkt_times),
+        random_time, len(random_times)
+    ))
