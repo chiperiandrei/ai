@@ -195,6 +195,9 @@ class Graph:
             max_depth += 1
         return -1
 
+    def heuristic_func(self, state):
+        return  state[4] + state[5]  # / 2
+
     def a_star(self):
         initial_state = self.__dict[0][1]
         key = str(initial_state)
@@ -230,7 +233,7 @@ class Graph:
 
             queue.sort(
                 reverse=True,
-                key=lambda state, : distances[str(state)] + (state[4] + state[5] / 1)  # / 2
+                key=lambda state, : distances[str(state)] + self.heuristic_func(state)
             )
 
 
