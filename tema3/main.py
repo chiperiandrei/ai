@@ -18,10 +18,10 @@ def isFinalState(table):
 			
 def initDefaultTable():
 	table = [
-		['c','c','c','c'],
+		['c1','c2','c3','c4'],
 		['x','x','x','x'],
 		['x','x','x','x'],
-		['p','p','p','p']
+		['p1','p2','p3','p4']
 	]
 	return table
 def prettyPrintTable(table):
@@ -30,6 +30,20 @@ def prettyPrintTable(table):
 	fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
 	table1 = [fmt.format(*row) for row in s]
 	print ('\n'.join(table1))
+	
+def doAMove(moveString,player):
+	global gameTable
+	lastPositioni = 0
+	lastPositionj = 0
+	for i in range(0,4):
+		for j in range(0,4):
+			if gameTable[i][j] == player[0].lower()+player[-1]:
+				lastPositioni = i
+				lastPositionj = j
+	
+	gameTable[lastPositioni][lastPositionj] = 'x'
+	gameTable[int(moveString[0])-1][int(moveString[2])-1] = player[0].lower()+player[-1]
+	
 if __name__ == "__main__":
 	gameTable = initDefaultTable()
 	if gameTable == []:
@@ -44,9 +58,12 @@ if __name__ == "__main__":
 		print("Player is starting...")
 	playerName = 'Computer' if firstPlayer == 'c' else 'Player'
 	while True:
-		x=input("Insert move for " + playerName)
+		y = input(playerName + ",choose your piece from 1 to 4 ")
+		x=input(playerName + ", please insert move for piese #" + y + " ")
 		if len(x) == 3:
 			print(playerName + ", your move is " + x[0] +" "+ x[2])
+			doAMove(x+y,playerName+y)
+			prettyPrintTable(gameTable)
 			if playerName[0].lower()=='c':
 				playerName = 'Player'
 			else:
