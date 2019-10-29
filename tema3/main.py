@@ -3,6 +3,12 @@
 #p - player sign
 #x - vacant sign ( no player is here ) 
 
+
+#imports
+
+import random
+
+
 gameTable = []
 
 def isFinalState(table):
@@ -31,3 +37,11 @@ if __name__ == "__main__":
 	else:
 		print("Table has been initialised!")
 		prettyPrintTable(gameTable)
+	firstPlayer = random.choice(['c','p'])
+	if firstPlayer == 'c':
+		print("Computer is starting...")
+	else:
+		print("Player is starting...")
+	playerName = 'Computer' if firstPlayer == 'c' else 'Player'
+	while True:
+		x=input("Insert move for " + playerName)
