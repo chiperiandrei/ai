@@ -45,3 +45,9 @@ if __name__ == "__main__":
 	playerName = 'Computer' if firstPlayer == 'c' else 'Player'
 	while True:
 		x=input("Insert move for " + playerName)
+		if len(x) == 3:
+			print(playerName + ", your move is " + x[0] +" "+ x[2])
+			if playerName[0].lower()=='c':
+				playerName = 'Player'
+			else:
+				playerName = 'Computer'
