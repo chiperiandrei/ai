@@ -12,9 +12,11 @@ gameTable = []
 
 
 def isFinalState(table):
-    if table[0][0].__str__()[0] == table[0][1].__str__()[0] == table[0][2].__str__()[0] == table[0][3].__str__()[0]:
+    if table[0][0].__str__()[0] == table[0][1].__str__()[0] == table[0][2].__str__()[0] == table[0][3].__str__()[
+        0] == 'p':
         return True
-    if table[3][0].__str__()[0] == table[3][1].__str__()[0] == table[3][2].__str__()[0] == table[3][3].__str__()[0]:
+    if table[3][0].__str__()[0] == table[3][1].__str__()[0] == table[3][2].__str__()[0] == table[3][3].__str__()[
+        0] == 'c':
         return True
 
 
