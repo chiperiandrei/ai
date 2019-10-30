@@ -64,6 +64,8 @@ def view(index, state):
     else:
         part = 'R'
     print('{}: {} {} {} {} ({})'.format(part, state[4], state[5], state[6], state[7], index))
+
+
 def view1(state):
     if state[1] < 0:
         part = 'L'
@@ -96,8 +98,8 @@ def bktr_strategy(state, path):
 
 if __name__ == '__main__':
     print("   M C M C")
-    boat_capacity = 4
-    m_no = 6
+    boat_capacity = 2
+    m_no = 4
     c_no = 3
     result = []
     state = initialize(boat_capacity, m_no, c_no)

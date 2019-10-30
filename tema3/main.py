@@ -12,11 +12,10 @@ gameTable = []
 
 
 def isFinalState(table):
-    for i in range(0, 3):
-        if table[0][i] != table[0][i + 1]:
-            return False
-        if table[3][i] != table[3][i + 1]:
-            return False
+    if table[0][0].__str__()[0] == table[0][1].__str__()[0] == table[0][2].__str__()[0] == table[0][3].__str__()[0]:
+        return True
+    if table[3][0].__str__()[0] == table[3][1].__str__()[0] == table[3][2].__str__()[0] == table[3][3].__str__()[0]:
+        return True
 
 
 def initDefaultTable():
@@ -64,14 +63,29 @@ if __name__ == "__main__":
     else:
         print("Player is starting...")
     playerName = 'Computer' if firstPlayer == 'c' else 'Player'
-    while True:
-        y = input(playerName + ",choose your piece from 1 to 4 ")
-        x = input(playerName + ", please insert move for piese #" + y + " ")
-        if len(x) == 3:
-            print(playerName + ", your move is " + x[0] + " " + x[2])
-            doAMove(x, playerName + y)
-            prettyPrintTable(gameTable)
-            if playerName[0].lower() == 'c':
-                playerName = 'Player'
-            else:
-                playerName = 'Computer'
+    ok = True
+    while isFinalState(gameTable) != True or ok == True:
+        ok = False
+        if playerName == 'Player':
+            y = input(playerName + ",choose your piece from 1 to 4 ")
+            x = input(playerName + ", please insert move for piese #" + y + " ")
+            if len(x) == 3:
+                print(playerName + ", your move is " + x[0] + " " + x[2])
+                doAMove(x, playerName + y)
+                prettyPrintTable(gameTable)
+                if playerName[0].lower() == 'c':
+                    playerName = 'Player'
+                else:
+                    playerName = 'Computer'
+        else:
+            y = random.randint(1, 4)
+            print(playerName + " has been choosen the piese #" + y.__str__())
+            x = input(playerName + ", please insert move for piese #" + y.__str__() + " ")
+            if len(x) == 3:
+                print(playerName + ", your move is " + x[0] + " " + x[2])
+                doAMove(x, playerName + y.__str__())
+                prettyPrintTable(gameTable)
+                if playerName[0].lower() == 'c':
+                    playerName = 'Player'
+                else:
+                    playerName = 'Computer'
