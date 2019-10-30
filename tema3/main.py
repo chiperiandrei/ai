@@ -15,7 +15,7 @@ def isFinalState(table):
     for i in range(0, 3):
         if table[0][i] != table[0][i + 1]:
             return False
-        if table[i][0] != table[i + 1][0]:
+        if table[3][i] != table[3][i + 1]:
             return False
 
 
