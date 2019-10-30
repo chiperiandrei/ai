@@ -38,6 +38,22 @@ def prettyPrintTable(table):
     print('\n'.join(table1))
 
 
+def inMatrixAndIsNotOccupied(row, col, moveString, player):
+    global gameTable
+    return row >= 0 and row < 4 and col >= 0 and col < 4 and gameTable[int(moveString[0]) - 1][
+        int(moveString[2]) - 1] != player[0].lower() + player[-1]
+
+
+def isValidMove(currentposition, moveString, player):
+    global gameTable
+    dx = [-1, 0, 1, 1, 1, 0, -1]
+    dy = [1, 1, 1, 0, -1, -1, -1]
+    for i in range(0, 8):
+        row = int(currentposition[0]) + dx[i]
+        col = int(currentposition[0]) + dx[i]
+        return inMatrixAndIsNotOccupied(row, col, moveString, player)
+
+
 def doAMove(moveString, player):
     global gameTable
     lastPositioni = 0
@@ -66,6 +82,16 @@ if __name__ == "__main__":
         print("Player is starting...")
     playerName = 'Computer' if firstPlayer == 'c' else 'Player'
     ok = True
+    currentMoves = {
+        "p1": "30",
+        "p2": "31",
+        "p3": "32",
+        "p4": "00",
+        "c1": "33",
+        "c2": "01",
+        "c3": "02",
+        "c4": "03"
+    }
     while isFinalState(gameTable) != True or ok == True:
         ok = False
         if playerName == 'Player':
@@ -73,7 +99,14 @@ if __name__ == "__main__":
             x = input(playerName + ", please insert move for piese #" + y + " ")
             if len(x) == 3:
                 print(playerName + ", your move is " + x[0] + " " + x[2])
-                doAMove(x, playerName + y)
+                if isValidMove(currentMoves[playerName[0].lower() + y], x, playerName + y):
+                    doAMove(x, playerName + y)
+                else:
+                    print("Bad move! Try again!!")
+                    y = input(playerName + ",choose your piece from 1 to 4 ")
+                    x = input(playerName + ", please insert move for piese #" + y + " ")
+                    if isValidMove(currentMoves[playerName[0].lower() + y], x, playerName + y):
+                        doAMove(x, playerName + y)
                 prettyPrintTable(gameTable)
                 if playerName[0].lower() == 'c':
                     playerName = 'Player'
@@ -85,7 +118,11 @@ if __name__ == "__main__":
             x = input(playerName + ", please insert move for piese #" + y.__str__() + " ")
             if len(x) == 3:
                 print(playerName + ", your move is " + x[0] + " " + x[2])
-                doAMove(x, playerName + y.__str__())
+                if isValidMove(currentMoves[playerName[0].lower() + y.__str__()], x, playerName + y.__str__()):
+                    doAMove(x, playerName + y.__str__())
+                else:
+                    print("get another move")
+                    x = input("da alta mutare")
                 prettyPrintTable(gameTable)
                 if playerName[0].lower() == 'c':
                     playerName = 'Player'
