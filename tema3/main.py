@@ -75,7 +75,20 @@ def doAMove(moveString, player):
     newI = int(moveString[0]) - 1
     newJ = int(moveString[2]) - 1
     currentMoves[player[0].lower() + player[-1]]=newI.__str__()+newJ.__str__()
+def heuristicFunction():
+  global currentMoves
+  global initialMoves
+  sumP=0
+  sumC=0
+  for key,value in currentMoves.items():
+    for key1,value1 in initialMoves.items():
+      if key[0]=='p':
+        sumP+=abs(int(value[0])-int(value1[0]))
+      else:
+        sumC+=abs(int(value[0])-int(value1[0]))
 
+  print(sumC)
+  print(sumP)
 
 if __name__ == "__main__":
     gameTable = initDefaultTable()
