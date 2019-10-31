@@ -51,6 +51,8 @@ def prettyPrintTable(table):
 
 def isValidMove(currentposition, moveString, player):
   global gameTable
+#if abs(int(currentposition[0])-int(moveString[0]))==1 and abs(int(currentposition[1])-int(moveString[2]))==1 \
+ # or abs(int(currentposition[0])-int(moveString[0]))==1 and abs(int(currentposition[1])-int(moveString[2]))==0 :
   if gameTable[int(moveString[0]) - 1][int(moveString[2]) - 1] != 'x':
     return False
   else:
