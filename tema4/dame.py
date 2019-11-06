@@ -262,7 +262,7 @@ class Table:
         else:
             value = infinity
             for action in self.get_actions(state):
-                _, h = self.minimax(action, False, depth + 1)
+                _, h = self.minimax(action, True, depth + 1)
                 return action, min(value, h)
 
     def minimax_wrapper(self):
@@ -300,4 +300,3 @@ if __name__ == '__main__':
             else:
                 switch = 0
                 table.print()
-
