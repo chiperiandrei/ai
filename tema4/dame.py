@@ -265,8 +265,37 @@ class Table:
                 _, h = self.minimax(action, True, depth + 1)
                 return action, min(value, h)
 
+    def minimaxAB(self, state=None, maximizer=True, depth=0, max_depth=2, alpha=-infinity, beta=infinity):
+        if state is None:
+            state = self.table
+
+        if depth >= max_depth or self.is_final(state):
+            return state, self.heuristics(state)
+
+        if maximizer:
+            value = -infinity
+            for action in self.get_actions(state):
+                _, h = self.minimaxAB(action, False, depth + 1, max_depth, alpha, beta)
+                value = max(value, h)
+                alpha = max(alpha, value)
+                if alpha >= beta:
+                    break
+                return action, max(value, h)
+        else:
+            value = infinity
+            for action in self.get_actions(state):
+                _, h = self.minimaxAB(action, True, depth + 1, max_depth, alpha, beta)
+                value = min(value, h)
+                beta = min(beta, value)
+                if beta <= alpha:
+                    break
+                return action, min(value, h)
+
     def minimax_wrapper(self):
         self.table, _ = self.minimax()
+
+    def minimaxAB_wrapper(self):
+        self.table, _ = self.minimaxAB()
 
 
 if __name__ == '__main__':
@@ -285,7 +314,7 @@ if __name__ == '__main__':
             break
         if switch == 0:
             print('Computer choice:')
-            table.minimax_wrapper()
+            table.minimaxAB_wrapper()
             switch = 1
             table.print()
         elif switch == 1:
