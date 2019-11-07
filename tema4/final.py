@@ -1,10 +1,11 @@
-from copy import deepcopy
+import pygame
 import random
 from math import inf as infinity
-import pygame
 from sys import exit
-import input_text as pygame_input
+from copy import deepcopy
 
+
+pygame.init()
 
 class Piece:
     def __init__(self, index, position, owner):
@@ -336,6 +337,9 @@ class Table:
                         (x1, y1),
                         40
                     )
+                    font = pygame.font.Font(pygame.font.get_default_font(), 36)
+                    text = font.render("c" + str(int(k + 1)), 1, (10, 10, 10))
+                    self.screen.blit(text, (x1 - 20, y1 - 20))
                 for q in range(4):
                     piece_player = self.get_piece(q + 1, 'Player')
                     r = piece_player.position['row']
@@ -348,6 +352,9 @@ class Table:
                         (x1, y1),
                         40
                     )
+                    font = pygame.font.Font(pygame.font.get_default_font(), 36)
+                    text = font.render("p" + str(int(q + 1)), 1, (10, 10, 10))
+                    self.screen.blit(text, (x1 - 20, y1 - 20))
         pygame.display.update()
 
 
